@@ -25,17 +25,6 @@ export type DecorRange = {
     commentThreads: vscode.CommentThread[],
 }
 
-    name: string,
-    addKey: vscode.TextEditorDecorationType,
-    delKey: vscode.TextEditorDecorationType,
-    changeKey: vscode.TextEditorDecorationType,
-    ranges: {
-        del: vscode.Range[],
-        change: vscode.Range[],
-    },
-    commentThreads: vscode.CommentThread[],
-}
-
 export type DocumentContent = {
     name: string,
     history: {

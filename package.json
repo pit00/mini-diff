@@ -2,7 +2,7 @@
     "name": "mini-diff",
     "displayName": "Mini Diff",
     "description": "show unsaved changes for document in gutter (kinda like git)",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "publisher": "pit00",
     "repository": "https://github.com/pit00/mini-diff",
     "icon": "img/icon.png",
@@ -19,32 +19,32 @@
     "contributes": {
         "commands": [
             {
-                "command": "showUnsavedChanges.goToPrevChange",
+                "command": "miniDiff.goToPrevChange",
                 "title": "Go To Prev Change",
-                "category": "Show Unsaved Changes",
+                "category": "Mini Diff",
                 "icon": "$(chevron-up)"
             },
             {
-                "command": "showUnsavedChanges.goToNextChange",
+                "command": "miniDiff.goToNextChange",
                 "title": "Go To Next Change",
-                "category": "Show Unsaved Changes",
+                "category": "Mini Diff",
                 "icon": "$(chevron-down)"
             }
         ],
         "submenus": [
             {
                 "id": "suc.editor.context",
-                "label": "Show Unsaved Changes"
+                "label": "Mini Diff"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "showUnsavedChanges.goToPrevChange",
+                    "command": "miniDiff.goToPrevChange",
                     "when": "sucFilePath"
                 },
                 {
-                    "command": "showUnsavedChanges.goToNextChange",
+                    "command": "miniDiff.goToNextChange",
                     "when": "sucFilePath"
                 }
             ],
@@ -56,73 +56,73 @@
             ],
             "editor/title": [
                 {
-                    "command": "showUnsavedChanges.goToPrevChange",
+                    "command": "miniDiff.goToPrevChange",
                     "when": "sucFilePath",
                     "group": "navigation"
                 },
                 {
-                    "command": "showUnsavedChanges.goToNextChange",
+                    "command": "miniDiff.goToNextChange",
                     "when": "sucFilePath",
                     "group": "navigation"
                 }
             ],
             "suc.editor.context": [
                 {
-                    "command": "showUnsavedChanges.goToPrevChange",
+                    "command": "miniDiff.goToPrevChange",
                     "when": "sucFilePath"
                 },
                 {
-                    "command": "showUnsavedChanges.goToNextChange",
+                    "command": "miniDiff.goToNextChange",
                     "when": "sucFilePath"
                 }
             ]
         },
         "configuration": {
-            "title": "Show Unsaved Changes",
+            "title": "Mini Diff",
             "type": "object",
             "properties": {
-                "showUnsavedChanges.wholeLine": {
+                "miniDiff.wholeLine": {
                     "type": "boolean",
                     "default": true,
                     "description": "highlight multi-line block"
                 },
-                "showUnsavedChanges.scmDisable": {
+                "miniDiff.scmDisable": {
                     "type": "boolean",
                     "default": true,
                     "description": "disable gutter comments when (.gitignore) is found in root of the workspace"
                 },
-                "showUnsavedChanges.clearOnSave": {
+                "miniDiff.clearOnSave": {
                     "type": "boolean",
                     "default": false,
                     "description": "clear decorations on file save"
                 },
-                "showUnsavedChanges.showInGutter": {
+                "miniDiff.showInGutter": {
                     "type": "boolean",
                     "default": true,
                     "description": "show changes in gutter"
                 },
-                "showUnsavedChanges.showInOverView": {
+                "miniDiff.showInOverView": {
                     "type": "boolean",
                     "default": true,
                     "description": "show changes in overview"
                 },
-                "showUnsavedChanges.showDiffOutput": {
+                "miniDiff.showDiffOutput": {
                     "type": "boolean",
                     "default": false,
                     "markdownDescription": "show changes diff in output panel"
                 },
-                "showUnsavedChanges.debounceTime": {
+                "miniDiff.debounceTime": {
                     "type": "number",
                     "default": 500,
                     "minimum": 500,
                     "markdownDescription": "ms to wait b4 checking for changes\n\n(increase the time if the editor became sluggish)"
                 },
-                "showUnsavedChanges.gitPath": {
+                "miniDiff.gitPath": {
                     "type": "string",
                     "default": "git",
                     "markdownDescription": "global git path, [git-installation](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)."
                 },
-                "showUnsavedChanges.terminalShellPath": {
+                "miniDiff.terminalShellPath": {
                     "type": [
                         "string",
                         "null"
@@ -130,7 +130,7 @@
                     "default": null,
                     "description": "custom terminal shell path"
                 },
-                "showUnsavedChanges.schemeTypes": {
+                "miniDiff.schemeTypes": {
                     "type": "array",
                     "default": [
                         "file",
@@ -144,7 +144,7 @@
                     "uniqueItems": true,
                     "description": "allowed files schemes"
                 },
-                "showUnsavedChanges.styles": {
+                "miniDiff.styles": {
                     "type": "object",
                     "default": {
                         "overview": {

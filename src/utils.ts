@@ -8,9 +8,9 @@ export let overviewConfig: any = {};
 export let commentController: vscode.CommentController;
 export let outputController: vscode.OutputChannel;
 
-export const PKG_NAME = 'showUnsavedChanges';
-export const PKG_ID = 'show-unsaved-changes';
-export const PKG_LABEL = 'Show Unsaved Changes';
+export const PKG_NAME = 'miniDiff';
+export const PKG_ID = 'mini-diff';
+export const PKG_LABEL = 'Mini Diff';
 
 export type DecorRange = {
     name: string,

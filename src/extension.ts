@@ -31,8 +31,8 @@ export async function activate(context) {
 
     context.subscriptions.push(
         // commands
-        vscode.commands.registerCommand('showUnsavedChanges.goToPrevChange', () => getNearestChangedLineNumber(-1)),
-        vscode.commands.registerCommand('showUnsavedChanges.goToNextChange', () => getNearestChangedLineNumber(1)),
+        vscode.commands.registerCommand('miniDiff.goToPrevChange', () => getNearestChangedLineNumber(-1)),
+        vscode.commands.registerCommand('miniDiff.goToNextChange', () => getNearestChangedLineNumber(1)),
 
         // on new document
         // @ts-ignore

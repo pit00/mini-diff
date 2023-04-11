@@ -33,14 +33,14 @@
 - remove comments reply box
     - disable comments for now as its giving error
 - better api (using `git diff`)
-- add new key **change** to `showUnsavedChanges.styles` to show edited/changed lines
+- add new key **change** to `miniDiff.styles` to show edited/changed lines
 - now instead of having a comment per line, it will be a comment per group of consecutive lines, more performant & wont slow/kill the editor
 - correct display of changed lines
 - update LICENSE
 - update rdme
-- add new config `showUnsavedChanges.debounceTime`
-- add new config `showUnsavedChanges.showDiffOutput`
-- add new config `showUnsavedChanges.gitPath`
+- add new config `miniDiff.debounceTime`
+- add new config `miniDiff.showDiffOutput`
+- add new config `miniDiff.gitPath`
 
 ## 0.1.1
 
@@ -48,11 +48,11 @@
 
 ## 0.1.2
 
-- add new config `showUnsavedChanges.schemeTypes`
+- add new config `miniDiff.schemeTypes`
 
 ## 0.1.3
 
-- add new config `showUnsavedChanges.terminalShellPath` thanks to [pit00](https://github.com/pit00)
+- add new config `miniDiff.terminalShellPath` thanks to [pit00](https://github.com/pit00)
 
 ## 0.1.4
 
@@ -61,5 +61,5 @@
 ## 0.1.5
 
 - fix gutter color customization at Windows
-- add new config `showUnsavedChanges.gitDisable`
+- add new config `miniDiff.gitDisable`
 - add new config for overview styles: position (can be "Center", "Left", "Right" or "Full")

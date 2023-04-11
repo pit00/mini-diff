@@ -86,6 +86,11 @@
                     "default": true,
                     "description": "highlight multi-line block"
                 },
+                "miniDiff.gitDisable": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "disable extension when (.gitignore) is found in root of the workspace"
+                },
                 "miniDiff.scmDisable": {
                     "type": "boolean",
                     "default": true,

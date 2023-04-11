@@ -1,24 +1,11 @@
 import fs from 'fs';
-import path from 'node:path';
-import * as vscode from 'vscode';
+import path fr
 
-export let config: vscode.WorkspaceConfiguration;
-export let gutterConfig: any = {};
-export let overviewConfig: any = {};
-export let commentController: vscode.CommentController;
-export let outputController: vscode.OutputChannel;
-
-export const PKG_NAME = 'miniDiff';
-export const PKG_ID = 'mini-diff';
-export const PKG_LABEL = 'Mini Diff';
-
-export type DecorRange = {
     name: string,
     addKey: vscode.TextEditorDecorationType,
     delKey: vscode.TextEditorDecorationType,
     changeKey: vscode.TextEditorDecorationType,
     ranges: {
-        add: vscode.Range[],
         del: vscode.Range[],
         change: vscode.Range[],
     },

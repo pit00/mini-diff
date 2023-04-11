@@ -95,11 +95,11 @@ export async function activate(context) {
 // init
 function initDecorator(document: vscode.TextDocument) {
     try {
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             const { fileName, uri } = document;
 
             if (!utils.config.schemeTypes.includes(uri.scheme)) {
-                utils.showMessage(`file scheme type '${uri.scheme}' is not supported`);
+                await utils.showMessage(`file scheme type '${uri.scheme}' is not supported`);
 
                 return reject();
             }

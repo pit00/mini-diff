@@ -3,8 +3,9 @@
     "displayName": "Mini Diff",
     "description": "show unsaved changes for document in gutter (kinda like git)",
     "version": "1.0.0",
-    "publisher": "ctf0",
-    "repository": "https://github.com/ctf0/vscode-show-unsaved-changes",
+    "publisher": "pit00",
+    "repository": "https://github.com/pit00/mini-diff",
+    "icon": "img/icon.png",
     "engines": {
         "vscode": "^1.68.0"
     },

@@ -79,7 +79,7 @@ export function checkForOutputOption(context) {
 }
 
 export function getImgPath(type: string) {
-    return vscode.extensions.getExtension(`ctf0.${PKG_ID}`)!.extensionUri.path.replace(/\/(\w:)/, "$1") + `/img/${type}.svg`;
+    return vscode.extensions.getExtension(`pit00.${PKG_ID}`)!.extensionUri.path.replace(/\/(\w:)/, "$1") + `/img/${type}.svg`;
 }
 
 export function getFileNameFromPath(filePath) {

@@ -2,7 +2,7 @@
     "name": "mini-diff",
     "displayName": "Mini Diff",
     "description": "show unsaved changes for document in gutter (kinda like git)",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "publisher": "pit00",
     "repository": "https://github.com/pit00/mini-diff",
     "icon": "img/icon.png",

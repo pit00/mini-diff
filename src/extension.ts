@@ -63,8 +63,8 @@ export async function activate(context) {
 
         // on file change
         vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined) => {
-            if (editor) {
-                setContext(!contentNotChanged(editor.document))
+            if (editor && editor === getActiveEditor()) {
+                setContext(!contentNotChanged(editor.document));
             }
         }),
 
@@ -74,9 +74,12 @@ export async function activate(context) {
                 const { document } = e;
                 const editor = getActiveEditor();
 
-                if (editor && editor.document == document) {
+                if (editor && editor.document === document) {
                     // full undo
-                    if (contentNotChanged(document)) {
+                    if (
+                        document.version > 1 &&
+                        contentNotChanged(document)
+                    ) {
                         await resetAll(document.fileName);
                         await initDecorator(document);
                     } else {
@@ -92,11 +95,11 @@ export async function activate(context) {
 // init
 function initDecorator(document: vscode.TextDocument) {
     try {
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const { fileName, uri } = document;
 
             if (!utils.config.schemeTypes.includes(uri.scheme)) {
-                await utils.showMessage(`file scheme type '${uri.scheme}' is not supported`);
+                utils.showMessage(`file scheme type '${uri.scheme}' is not supported`);
 
                 return reject();
             }
@@ -154,7 +157,7 @@ function createDecorator(type: string): vscode.TextEditorDecorationType {
 }
 
 function getActiveEditor(): vscode.TextEditor | undefined {
-    return vscode.window.activeTextEditor
+    return vscode.window.activeTextEditor;
 }
 
 async function updateDecors(document: vscode.TextDocument) {
@@ -165,7 +168,7 @@ async function updateDecors(document: vscode.TextDocument) {
             let decor = getDecorRangesFor(fileName);
 
             if (!decor) {
-                return reject()
+                return reject();
             }
 
             const snapshot = getLastSnapshotFor(fileName);
@@ -199,7 +202,7 @@ async function updateDecors(document: vscode.TextDocument) {
             // comments
             const threads: any = [];
 
-            await vscode.commands.executeCommand('workbench.action.collapseAllComments')
+            await vscode.commands.executeCommand('workbench.action.collapseAllComments');
 
             decor.commentThreads.map((thread: vscode.CommentThread) => thread.dispose());
 
@@ -249,7 +252,7 @@ async function updateDecors(document: vscode.TextDocument) {
             // @ts-ignore
             await reApplyDecors(getActiveEditor(), decor);
 
-            setContext(true)
+            setContext(true);
 
             resolve(true);
         } catch (error) {
@@ -290,7 +293,7 @@ function resetAll(docFilename: string): Promise<unknown> {
         const decor = getDecorRangesFor(docFilename);
         const content = findDocumentsContentFor(docFilename);
 
-        setContext(false)
+        setContext(false);
 
         if (!decor && !content) {
             return reject();
@@ -355,57 +358,59 @@ function getNearestChangedLineNumber(direction: number): number {
     const editor = getActiveEditor();
 
     if (editor && !contentNotChanged(editor.document)) {
-        const { document, selection } = editor
-        let lineNumbers = getLineNumbersList(document.fileName)
+        const { document, selection } = editor;
+        const lineNumbers = getLineNumbersList(document.fileName);
 
         if (lineNumbers.length) {
-            const currentLine = selection.active.line
-            let ln: number | undefined
+            const currentLine = selection.active.line;
+            let ln: number | undefined;
 
             // loop: after / last item in the list + go next
             if (currentLine >= lineNumbers[lineNumbers.length - 1] && direction === 1) {
-                ln = lineNumbers[0]
+                ln = lineNumbers[0];
             }
 
             // loop: before / first item in the list + go prev
             if (currentLine <= lineNumbers[0] && direction === -1) {
-                ln = lineNumbers[lineNumbers.length - 1]
+                ln = lineNumbers[lineNumbers.length - 1];
             }
 
             // normal: inside changes range
             if (ln === undefined) {
                 if (direction === -1) {
-                    ln = lineNumbers.reverse().find((lineNumber) => currentLine > lineNumber)
+                    ln = lineNumbers.reverse().find((lineNumber) => currentLine > lineNumber);
                 } else {
-                    ln = lineNumbers.find((lineNumber) => currentLine < lineNumber)
+                    ln = lineNumbers.find((lineNumber) => currentLine < lineNumber);
                 }
             }
 
             if (ln !== undefined) {
-                const pos = new vscode.Position(ln, 0)
-                editor.selection = new vscode.Selection(pos, pos)
-                editor.revealRange(new vscode.Range(pos, pos), vscode.TextEditorRevealType.InCenter)
+                const pos = new vscode.Position(ln, 0);
+                editor.selection = new vscode.Selection(pos, pos);
+                editor.revealRange(new vscode.Range(pos, pos), vscode.TextEditorRevealType.InCenter);
             }
         }
     }
+    
+    return 0;
 }
 
 function getLineNumbersList(fileName) {
-    let decor = getDecorRangesFor(fileName);
-    let lineNumbers: number[] = []
+    const decor = getDecorRangesFor(fileName);
+    const lineNumbers: number[] = [];
 
     if (decor) {
-        let { ranges } = decor
+        const { ranges } = decor;
         lineNumbers.push(
             ...ranges.add.map((range: vscode.Range) => range.start.line),
             ...ranges.del.map((range: vscode.Range) => range.start.line),
             ...ranges.change.map((range: vscode.Range) => range.start.line),
-        )
+        );
 
-        return [...new Set(lineNumbers.sort())]
+        return [...new Set(lineNumbers.sort())];
     }
 
-    return []
+    return [];
 }
 
 /* -------------------------------------------------------------------------- */

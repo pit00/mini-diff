@@ -92,15 +92,35 @@ export async function readConfig(): Promise<void> {
     overviewConfig = config.styles.overview;
     gutterConfig = config.styles.gutter;
 
-    await changeIconColor('add', gutterConfig.add);
-    await changeIconColor('del', gutterConfig.del);
-    await changeIconColor('change', gutterConfig.change);
+    await changeIconColorAdd('add', gutterConfig.add);
+    await changeIconColorDel('del', gutterConfig.del);
+    await changeIconColorChange('change', gutterConfig.change);
 }
 
-export function changeIconColor(type: string, color: any) {
+export function changeIconColorAdd(type: string, color: any) {
     return new Promise((resolve) => fs.writeFile(
         getImgPath(type),
-        `<svg width="10" height="40" viewPort="0 0 10 40" xmlns="http://www.w3.org/2000/svg"><polygon points="5,0 10,0 10,40 5,40" fill="${color}"/></svg>`,
+        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}" fill-rule="evenodd" clip-rule="evenodd"><path d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z"/><path d="M8 4H7v3H4v1h3v3h1V8h3V7H8V4z"/></g></svg>`,
+        () => {
+            resolve(true);
+        },
+    ));
+}
+
+export function changeIconColorDel(type: string, color: any) {
+    return new Promise((resolve) => fs.writeFile(
+        getImgPath(type),
+        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}"><path d="M10 7v1H5V7h5z"/><path fill-rule="evenodd" d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z" clip-rule="evenodd"/></g></svg>`,
+        () => {
+            resolve(true);
+        },
+    ));
+}
+
+export function changeIconColorChange(type: string, color: any) {
+    return new Promise((resolve) => fs.writeFile(
+        getImgPath(type),
+        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="${color}" fill-rule="evenodd" d="M1.5 1h13l.5.5v13l-.5.5h-13l-.5-.5v-13l.5-.5zM2 2v12h12V2H2zm6 9a3 3 0 1 0 0-6a3 3 0 0 0 0 6z" clip-rule="evenodd"/></svg>`,
         () => {
             resolve(true);
         },

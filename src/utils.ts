@@ -100,17 +100,7 @@ export async function readConfig(): Promise<void> {
 export function changeIconColorAdd(type: string, color: any) {
     return new Promise((resolve) => fs.writeFile(
         getImgPath(type),
-        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}" fill-rule="evenodd" clip-rule="evenodd"><path d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z"/><path d="M8 4H7v3H4v1h3v3h1V8h3V7H8V4z"/></g></svg>`,
-        () => {
-            resolve(true);
-        },
-    ));
-}
-
-export function changeIconColorDel(type: string, color: any) {
-    return new Promise((resolve) => fs.writeFile(
-        getImgPath(type),
-        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}"><path d="M10 7v1H5V7h5z"/><path fill-rule="evenodd" d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z" clip-rule="evenodd"/></g></svg>`,
+        `<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}" fill-rule="evenodd" clip-rule="evenodd" transform="matrix(1, 0, 0, 1, 0.5, 0.5)"><path d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z" /><path d="M8 4H7v3H4v1h3v3h1V8h3V7H8V4z" /></g></svg>`,
         () => {
             resolve(true);
         },
@@ -120,7 +110,17 @@ export function changeIconColorDel(type: string, color: any) {
 export function changeIconColorChange(type: string, color: any) {
     return new Promise((resolve) => fs.writeFile(
         getImgPath(type),
-        `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="${color}" fill-rule="evenodd" d="M1.5 1h13l.5.5v13l-.5.5h-13l-.5-.5v-13l.5-.5zM2 2v12h12V2H2zm6 9a3 3 0 1 0 0-6a3 3 0 0 0 0 6z" clip-rule="evenodd"/></svg>`,
+        `<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}" fill-rule="evenodd" clip-rule="evenodd" transform="matrix(1, 0, 0, 1, 0.5, 0.5)"><path d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z" /><path d="M 7.5 10.5 C 9.809 10.5 11.253 8 10.098 6 C 9.562 5.072 8.572 4.5 7.5 4.5 C 5.191 4.5 3.747 7 4.902 9 C 5.438 9.928 6.428 10.5 7.5 10.5 Z" /></g></svg>`,
+        () => {
+            resolve(true);
+        },
+    ));
+}
+
+export function changeIconColorDel(type: string, color: any) {
+    return new Promise((resolve) => fs.writeFile(
+        getImgPath(type),
+        `<?xml version="1.0" encoding="utf-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="${color}" fill-rule="evenodd" clip-rule="evenodd" transform="matrix(1, 0, 0, 1, 0.5, 0.5)"><path d="M1.5 1h12l.5.5v12l-.5.5h-12l-.5-.5v-12l.5-.5zM2 13h11V2H2v11z" /><path d="M10 7v1H5V7h5z" /></g></svg>`,
         () => {
             resolve(true);
         },

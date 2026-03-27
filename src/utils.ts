@@ -31,7 +31,7 @@ export type DocumentContent = {
     },
 }
 
-export function checkForOutputOption(context) {
+export function checkForOutputOption(context: any) {
     if (config.showDiffOutput) {
         if (!outputController) {
             outputController = vscode.window.createOutputChannel(PKG_LABEL, 'diff');
@@ -49,7 +49,7 @@ export function getImgPath(type: string) {
     return vscode.extensions.getExtension(`pit00.${PKG_ID}`)!.extensionUri.path.replace(/\/(\w:)/, "$1") + `/img/${type}.svg`;
 }
 
-export function getFileNameFromPath(filePath) {
+export function getFileNameFromPath(filePath: any) {
     return path.parse(filePath).name;
 }
 
@@ -94,8 +94,8 @@ export function changeIconColorDel(type: string, color: any) {
     ));
 }
 
-export function groupConsecutiveLines(list) {
-    return list.reduce((accumulator, currentValue) => {
+export function groupConsecutiveLines(list: any) {
+    return list.reduce((accumulator: any, currentValue: any) => {
         const lastGroup = accumulator[accumulator.length - 1];
         
         if (!lastGroup || lastGroup[lastGroup.length - 1].lineNumber !== currentValue.lineNumber - 1) {
@@ -108,7 +108,7 @@ export function groupConsecutiveLines(list) {
     }, []);
 }
 
-export function showMessage(msg) {
+export function showMessage(msg: any) {
     return vscode.window.showWarningMessage(`${PKG_LABEL}: ${msg}`);
 }
 

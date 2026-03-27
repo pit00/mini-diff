@@ -2,7 +2,7 @@
     "name": "mini-diffs",
     "displayName": "Mini Diffs",
     "description": "Similar to mini diff function of Sublime text editor",
-    "version": "0.3.5",
+    "version": "0.3.11",
     "publisher": "pit00",
     "repository": "https://github.com/pit00/mini-diff",
     "icon": "img/icon.png",
@@ -79,33 +79,18 @@
                     "default": null,
                     "description": "custom terminal shell path"
                 },
-                "miniDiff.disableWarnings": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "hide scheme support warnings"
-                },
                 "miniDiff.disableInGit": {
                     "type": "boolean",
                     "default": false,
                     "description": "Disable for files inside Git repositories"
-                },
-                "miniDiff.schemeTypes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    },
-                    "minItems": 1,
-                    "uniqueItems": true,
-                    "description": "allowed files schemes"
                 },
                 "miniDiff.schemeTypesIgnore": {
                     "type": "array",
                     "items": {
                         "type": "string"
                     },
-                    "minItems": 1,
                     "uniqueItems": true,
-                    "description": "ignore this schemes & dont show warning message when requested"
+                    "description": "ignored files schemes"
                 },
                 "miniDiff.styles": {
                     "type": "object",

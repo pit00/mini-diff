@@ -113,7 +113,7 @@ async function runDiffCmnd(path1: string, path2: string, isEmptyFile = false) {
         );
         
         return stdout;
-    } catch ({ message }) {
-        return message;
+    } catch (err: any) {
+        return err.message;
     }
 }

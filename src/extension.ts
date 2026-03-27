@@ -7,7 +7,7 @@ import * as utils from './utils';
 const decorRanges: utils.DecorRange[] = [];
 const documentsContent: utils.DocumentContent[] = [];
 
-export async function activate(context) {
+export async function activate(context: any) {
     utils.readConfig();
     utils.checkForOutputOption(context);
     
@@ -115,7 +115,7 @@ async function visibleEditors(updateDecors: boolean = false) {
 }
 
 function isIgnored(document: vscode.TextDocument) {
-    return utils.config.schemeTypesIgnore.some((scheme) => scheme == document.uri.scheme);
+    return utils.config.schemeTypesIgnore.some((scheme: any) => scheme == document.uri.scheme);
 }
 
 /* Decors ------------------------------------------------------------------- */
@@ -126,18 +126,21 @@ function initDecorator(document: vscode.TextDocument) {
     }
     
     return new Promise((resolve, reject) => {
-        const { fileName, uri } = document;
-        const fileScheme = uri.scheme;
+        const { fileName } = document;
+        // const { fileName, uri } = document;
+        // const fileScheme = uri.scheme;
         
         if (isIgnored(document)) {
             return reject(false);
         }
-        if (utils.config.disableWarnings) {
-            if (!utils.config.schemeTypes.some((scheme) => scheme == fileScheme)) {
-                utils.showMessage(`file scheme type '${fileScheme}' is not supported`);
-                return reject(false);
-            }
-        }
+        
+        // if (utils.config.schemeTypes.some((scheme: any) => scheme == fileScheme)) {
+        //     if (utils.config.disableWarnings) {
+        //         utils.showMessage(`file scheme type '${fileScheme}' is not supported`);
+        //     }
+        //     return reject(false);
+        // }
+        
         if (hasContentFor(fileName)) {
             return reject(false);
         }
@@ -345,7 +348,7 @@ function hasContentFor(fileName: string): boolean {
     return documentsContent.some((item) => item.name == fileName);
 }
 
-function setContext(val, key = 'sucFilePath') {
+function setContext(val: any, key = 'sucFilePath') {
     return vscode.commands.executeCommand('setContext', key, val);
 }
 
@@ -390,7 +393,7 @@ function getNearestChangedLineNumber(direction: number): number {
     return 0;
 }
 
-function getLineNumbersList(fileName) {
+function getLineNumbersList(fileName: any) {
     const decor = getDecorRangesFor(fileName);
     const lineNumbers: number[] = [];
     
@@ -408,12 +411,11 @@ function getLineNumbersList(fileName) {
     return [];
 }
 
-
 function isMiniDiffEnabled(document: vscode.TextDocument): boolean {
     const config = vscode.workspace.getConfiguration('miniDiff');
     
     // scheme filter (your existing logic)
-    if (!config.schemeTypes?.includes(document.uri.scheme)) {
+    if (config.schemeTypesIgnore?.includes(document.uri.scheme)) {
         return false;
     }
     
@@ -424,7 +426,5 @@ function isMiniDiffEnabled(document: vscode.TextDocument): boolean {
     
     return true;
 }
-
-/* -------------------------------------------------------------------------- */
 
 export function deactivate() { }

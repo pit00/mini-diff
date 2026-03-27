@@ -76,8 +76,8 @@
 - `miniDiff.disableInGit` instead of `miniDiff.gitDisable`
 - Add `miniDiff.clearDiffs`
 
-## 0.4
+## 0.4.0
 
 - Remove `miniDiff.disableWarnings`
 - Remove `miniDiff.schemeTypes`
-- Add `miniDiff.clearDiffs` cmd
+- Add `miniDiff.clearDiffs` command

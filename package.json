@@ -2,7 +2,7 @@
     "name": "mini-diffs",
     "displayName": "Mini Diffs",
     "description": "Similar to mini diff function of Sublime text editor",
-    "version": "0.3.11",
+    "version": "0.4.0",
     "publisher": "pit00",
     "repository": "https://github.com/pit00/mini-diff",
     "icon": "img/icon.png",

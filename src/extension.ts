@@ -22,7 +22,7 @@ export async function activate(context: any) {
     // on start
     await visibleEditors();
     
-    // ✅ debounced update (created ONCE)
+    // debounced update
     const debouncedUpdate = pDebounce(async (document: vscode.TextDocument) => {
         const editor = getActiveEditor();
         
@@ -43,6 +43,19 @@ export async function activate(context: any) {
         // commands
         vscode.commands.registerCommand('miniDiff.goToPrevChange', () => getNearestChangedLineNumber(-1)),
         vscode.commands.registerCommand('miniDiff.goToNextChange', () => getNearestChangedLineNumber(1)),
+        vscode.commands.registerCommand('miniDiff.clearDiffs', async () => {
+            const editor = getActiveEditor();
+            if (!editor) return;
+            
+            const document = editor.document;
+            
+            await resetAll(document.fileName);
+            
+            // re-init fresh baseline
+            await initDecorator(document);
+            
+            await setContext(false);
+        }),
         
         // on close
         vscode.workspace.onDidCloseTextDocument(async (document) => {
@@ -86,20 +99,6 @@ export async function activate(context: any) {
             }
             
             debouncedUpdate(document);
-        }),
-        
-        vscode.commands.registerCommand('miniDiff.clearDiffs', async () => {
-            const editor = getActiveEditor();
-            if (!editor) return;
-            
-            const document = editor.document;
-            
-            await resetAll(document.fileName);
-            
-            // re-init fresh baseline
-            await initDecorator(document);
-            
-            await setContext(false);
         }),
     );
 }
@@ -352,43 +351,64 @@ function setContext(val: any, key = 'sucFilePath') {
     return vscode.commands.executeCommand('setContext', key, val);
 }
 
+function groupConsecutive(lines: number[]) {
+    const groups: number[][] = [];
+    let current: number[] = [];
+    
+    for (let i = 0; i < lines.length; i++) {
+        if (i === 0 || lines[i] === lines[i - 1] + 1) {
+            current.push(lines[i]);
+        } else {
+            groups.push(current);
+            current = [lines[i]];
+        }
+    }
+    
+    if (current.length) groups.push(current);
+    
+    return groups;
+}
+
 function getNearestChangedLineNumber(direction: number): number {
     const editor = getActiveEditor();
     
-    if (editor && !contentNotChanged(editor.document)) {
-        const { document, selection } = editor;
-        const lineNumbers = getLineNumbersList(document.fileName);
-        
-        if (lineNumbers.length) {
-            const currentLine = selection.active.line;
-            let ln: number | undefined;
-            
-            // loop: after / last item in the list + go next
-            if (currentLine >= lineNumbers[lineNumbers.length - 1] && direction === 1) {
-                ln = lineNumbers[0];
-            }
-            
-            // loop: before / first item in the list + go prev
-            if (currentLine <= lineNumbers[0] && direction === -1) {
-                ln = lineNumbers[lineNumbers.length - 1];
-            }
-            
-            // normal: inside changes range
-            if (ln === undefined) {
-                if (direction === -1) {
-                    ln = lineNumbers.reverse().find((lineNumber) => currentLine > lineNumber);
-                } else {
-                    ln = lineNumbers.find((lineNumber) => currentLine < lineNumber);
-                }
-            }
-            
-            if (ln !== undefined) {
-                const pos = new vscode.Position(ln, 0);
-                editor.selection = new vscode.Selection(pos, pos);
-                editor.revealRange(new vscode.Range(pos, pos), vscode.TextEditorRevealType.InCenter);
-            }
+    if (!editor || contentNotChanged(editor.document)) return 0;
+    
+    const { selection } = editor;
+    const lineNumbers = getLineNumbersList(editor.document.fileName);
+    
+    if (!lineNumbers.length) return 0;
+    
+    const groups = groupConsecutive(lineNumbers);
+    
+    const currentLine = selection.active.line;
+    
+    let index = groups.findIndex(g =>
+        currentLine >= g[0] && currentLine <= g[g.length - 1]
+    );
+    
+    // if not inside any group, find nearest
+    if (index === -1) {
+        if (direction === 1) {
+            index = groups.findIndex(g => g[0] > currentLine);
+            if (index === -1) index = 0;
+        } else {
+            index = [...groups].reverse().findIndex(g => g[g.length - 1] < currentLine);
+            if (index === -1) index = groups.length - 1;
+            else index = groups.length - 1 - index;
         }
+    } else {
+        index = (index + direction + groups.length) % groups.length;
     }
+    
+    const targetLine = groups[index][0];
+    
+    const pos = new vscode.Position(targetLine, 0);
+    editor.selection = new vscode.Selection(pos, pos);
+    editor.revealRange(
+        new vscode.Range(pos, pos),
+        vscode.TextEditorRevealType.InCenter
+    );
     
     return 0;
 }

@@ -1,15 +1,13 @@
-# Show Unsaved Changes
+# Mini diffs
 
-show unsaved changes for document in gutter (kinda like git)
+Similar to mini diff function of Sublime text editor.
+
+Fork of [Show Unsaved Changes](https://github.com/ctf0/vscode-show-unsaved-changes)
 
 ## Features
 
-- show `added/changed/deleted` lines indicators in gutter & overview ruler
-- show comments with original contents of `deleted/changed` line for easier debugging
-- remove indicators on file `close/save`
+- Different options for icons, colors, ruler position and warnings.
 
-![demo](https://user-images.githubusercontent.com/7388088/72254779-b5281880-360d-11ea-92f7-1e8508f356aa.png)
+## Requirements
 
-## Notes
-
-- `git` must be installed globally because we use `git diff` to get the changes
+- `git`

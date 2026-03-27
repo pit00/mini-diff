@@ -63,3 +63,15 @@
 - fix gutter color customization at Windows
 - add new config `miniDiff.gitDisable`
 - add new config for overview styles: position (can be "Center", "Left", "Right" or "Full")
+
+## 0.3.0
+
+- code redux
+- remove `miniDiff.scmDisable`
+- add `miniDiff.disableWarnings`
+- add `miniDiff.schemeTypesIgnore`
+
+## 0.3.5
+
+- `miniDiff.disableInGit` instead of `miniDiff.gitDisable`
+- Add `miniDiff.clearDiffs`

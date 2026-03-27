@@ -1,8 +1,8 @@
 {
-    "name": "mini-diff",
-    "displayName": "Mini Diff",
-    "description": "show unsaved changes for document in gutter (kinda like git)",
-    "version": "1.0.14",
+    "name": "mini-diffs",
+    "displayName": "Mini Diffs",
+    "description": "Similar to mini diff function of Sublime text editor",
+    "version": "0.3.5",
     "publisher": "pit00",
     "repository": "https://github.com/pit00/mini-diff",
     "icon": "img/icon.png",
@@ -20,63 +20,17 @@
         "commands": [
             {
                 "command": "miniDiff.goToPrevChange",
-                "title": "Go To Prev Change",
-                "category": "Mini Diff",
-                "icon": "$(chevron-up)"
+                "title": "Mini Diffs: go to prev change"
             },
             {
                 "command": "miniDiff.goToNextChange",
-                "title": "Go To Next Change",
-                "category": "Mini Diff",
-                "icon": "$(chevron-down)"
-            }
-        ],
-        "submenus": [
+                "title": "Mini Diffs: go to next change"
+            },
             {
-                "id": "suc.editor.context",
-                "label": "Mini Diff"
+                "command": "miniDiff.clearDiffs",
+                "title": "Mini Diffs: clear current files diffs"
             }
         ],
-        "menus": {
-            "commandPalette": [
-                {
-                    "command": "miniDiff.goToPrevChange",
-                    "when": "sucFilePath"
-                },
-                {
-                    "command": "miniDiff.goToNextChange",
-                    "when": "sucFilePath"
-                }
-            ],
-            "editor/context": [
-                {
-                    "submenu": "suc.editor.context",
-                    "group": "suc"
-                }
-            ],
-            "editor/title": [
-                {
-                    "command": "miniDiff.goToPrevChange",
-                    "when": "sucFilePath",
-                    "group": "navigation"
-                },
-                {
-                    "command": "miniDiff.goToNextChange",
-                    "when": "sucFilePath",
-                    "group": "navigation"
-                }
-            ],
-            "suc.editor.context": [
-                {
-                    "command": "miniDiff.goToPrevChange",
-                    "when": "sucFilePath"
-                },
-                {
-                    "command": "miniDiff.goToNextChange",
-                    "when": "sucFilePath"
-                }
-            ]
-        },
         "configuration": {
             "title": "Mini Diff",
             "type": "object",
@@ -85,16 +39,6 @@
                     "type": "boolean",
                     "default": true,
                     "description": "highlight multi-line block"
-                },
-                "miniDiff.gitDisable": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "disable extension when (.gitignore) is found in root of the workspace"
-                },
-                "miniDiff.scmDisable": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "disable gutter comments when (.gitignore) is found in root of the workspace"
                 },
                 "miniDiff.clearOnSave": {
                     "type": "boolean",
@@ -120,7 +64,7 @@
                     "type": "number",
                     "default": 500,
                     "minimum": 500,
-                    "markdownDescription": "ms to wait b4 checking for changes\n\n(increase the time if the editor became sluggish)"
+                    "markdownDescription": "ms to wait before checking for changes\n\n(increase the time if the editor became sluggish)"
                 },
                 "miniDiff.gitPath": {
                     "type": "string",
@@ -135,19 +79,33 @@
                     "default": null,
                     "description": "custom terminal shell path"
                 },
+                "miniDiff.disableWarnings": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "hide scheme support warnings"
+                },
+                "miniDiff.disableInGit": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Disable for files inside Git repositories"
+                },
                 "miniDiff.schemeTypes": {
                     "type": "array",
-                    "default": [
-                        "file",
-                        "untitled",
-                        "vscode-userdata"
-                    ],
                     "items": {
                         "type": "string"
                     },
                     "minItems": 1,
                     "uniqueItems": true,
                     "description": "allowed files schemes"
+                },
+                "miniDiff.schemeTypesIgnore": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "description": "ignore this schemes & dont show warning message when requested"
                 },
                 "miniDiff.styles": {
                     "type": "object",
